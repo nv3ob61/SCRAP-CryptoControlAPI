@@ -22,15 +22,22 @@ package monmo.org.cryptocontrol;
  * @author nv3ob61
  */
 public class MyApiKey {
+  //add your api key here, from:
+  // https://cryptocontrol.io/en/developers/apis
 
-  public static final String API_KEY = "API";
+  // it's free!
+  public static final String API_KEY = "DEF_API";
+
+  //control String
+  private String defApi = "DEF_API";
 
   private String myKey;
 
   public MyApiKey() {
 
     myKey = API_KEY;
-    if (myKey == null) {
+    defApi = myKey;
+    if (myKey == null || myKey.equals("DEF_API")) {
       throw new Error("No API key found. Register for an API key at https://cryptocontrol.io/apis");
     }
 
