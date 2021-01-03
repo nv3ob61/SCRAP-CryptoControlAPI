@@ -24,9 +24,11 @@ package monmo.org.cryptocontrol;
 public class MyApiKey {
   //add your api key here, from:
   // https://cryptocontrol.io/en/developers/apis
+
   // it's free!
   public static final String API_KEY = "DEF_API";
 
+  public static final int KEY_LENGTH = 32;
   //control String
   public static final String DEF_API = "DEF_API";
 
@@ -35,10 +37,32 @@ public class MyApiKey {
   public MyApiKey() {
 
     myKey = API_KEY;
-    if (myKey == null || myKey.equals(DEF_API)) {
+    if (!checkKey(myKey)) {
+      System.out.println("PACO ERROR: Error, check MyApiKey -> String API_KEY,"
+              + "maybe because it's DEF_API or a wrong value. This won't load "
+              + "anything.. Sorry.");
+    }
+  }
+
+  public static boolean checkKey(String mykey) {
+    boolean isOk = false;
+
+    if (mykey == null || mykey.equals(DEF_API)) {
+      if (mykey != null && mykey.equals(DEF_API)) {
+        System.out.println("  ..INFO: You have DEF_API as current API key. Check config values....");
+      }
       throw new Error("No API key found. Register for an API key at https://cryptocontrol.io/apis");
+    } else if (!checkLength(mykey.length())) {
+      System.out.println("ERROR: The key is not a 32 length String...");
+    } else {
+      isOk = true;
     }
 
+    return isOk;
+  }
+
+  public static boolean checkLength(int mykey) {
+    return mykey == KEY_LENGTH;
   }
 
   public MyApiKey(String myKey) {
@@ -50,11 +74,8 @@ public class MyApiKey {
   }
 
   public void setMyKey(String myKey) {
-    if (myKey == null) {
-      throw new Error("No API key found. Register for an API key at https://cryptocontrol.io/apis");
-    } else {
+    if (myKey != null && myKey.equals(DEF_API) && myKey.length() == KEY_LENGTH) {
       this.myKey = myKey;
     }
   }
-
 }
